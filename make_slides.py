@@ -89,7 +89,9 @@ def make_slides(config_filename, do_compile_pdf=True):
                     slide_template=template,
                     slide_section=slide['title'],
                     slide_title=slide['title'],
-                    plots=slide['plots']
+                    plots=slide['plots'],
+                    top_text=slide['toptext'],
+                    bottom_text=slide['bottomtext']
                 )
             )
 

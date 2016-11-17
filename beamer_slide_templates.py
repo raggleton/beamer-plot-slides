@@ -12,12 +12,14 @@ one_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
 \begin{frame}{@SLIDE_TITLE}
+@TOPTEXT
 \begin{center}
 @PLOT1TITLE
 \\
 \includegraphics[width=\textwidth]{@PLOT1}
 \\
 \end{center}
+@BOTTOMTEXT
 \end{frame}
 """
 
@@ -26,6 +28,7 @@ two_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
 \begin{frame}{@SLIDE_TITLE}
+@TOPTEXT
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \begin{center}
@@ -44,6 +47,7 @@ r"""
 \end{center}
 \end{column}
 \end{columns}
+@BOTTOMTEXT
 \end{frame}
 """
 
@@ -52,7 +56,7 @@ four_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
 \begin{frame}{@SLIDE_TITLE}
-Some top text
+@TOPTEXT
 \begin{columns}
 \begin{column}{0.4\textwidth}
 \begin{center}
@@ -80,7 +84,7 @@ Some top text
 \end{center}
 \end{column}
 \end{columns}
-some bottom text
+@BOTTOMTEXT
 \end{frame}
 """
 
@@ -88,6 +92,7 @@ six_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
 \begin{frame}{@SLIDE_TITLE}
+@TOPTEXT
 \begin{columns}
 \begin{column}{0.33\textwidth}
 \begin{center}
@@ -125,11 +130,12 @@ r"""
 \end{center}
 \end{column}
 \end{columns}
+@BOTTOMTEXT
 \end{frame}
 """
 
 
-def make_slide(slide_template, slide_section, slide_title, plots):
+def make_slide(slide_template, slide_section, slide_title, plots, top_text=None, bottom_text=None):
     """
     Create slide contents.
 
@@ -143,6 +149,9 @@ def make_slide(slide_template, slide_section, slide_title, plots):
         Slide title
     plots : list[(str, str)]
         Filename and optional title for each plot
+    top_text : str, optional
+
+    bottom_text : str, optional
 
     Returns
     -------
@@ -153,6 +162,10 @@ def make_slide(slide_template, slide_section, slide_title, plots):
     print "making slide"
     slide = slide_template.replace("@SLIDE_TITLE", slide_title)
     slide = slide.replace("@SLIDE_SECTION", slide_section)
+    top_text = top_text or ""
+    slide = slide.replace("@TOPTEXT", top_text)
+    bottom_text = bottom_text or ""
+    slide = slide.replace("@BOTTOMTEXT", bottom_text)
     for i, (plot_filename, plot_title) in enumerate(plots):
             slide = slide.replace("@PLOT"+str(i+1)+"TITLE", plot_title)
             slide = slide.replace("@PLOT"+str(i+1), plot_filename)
