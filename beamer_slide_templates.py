@@ -16,7 +16,7 @@ r"""
 \begin{center}
 @PLOT1TITLE
 \\
-\includegraphics[width=\textwidth]{@PLOT1}
+\includegraphics[width=0.8\textwidth]{@PLOT1}
 \\
 \end{center}
 @BOTTOMTEXT
