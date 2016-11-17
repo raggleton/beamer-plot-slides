@@ -1,0 +1,165 @@
+"""
+Templates for various beamer slides, like 4 plots, etc
+
+Robin Aggleton 2015
+"""
+
+
+import re
+
+# Needs testing
+one_plot_slide = \
+r"""
+\section{@SLIDE_SECTION}
+\begin{frame}{@SLIDE_TITLE}
+\begin{center}
+@PLOT1TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT1}
+\\
+\end{center}
+\end{frame}
+"""
+
+# Nees testing
+two_plot_slide = \
+r"""
+\section{@SLIDE_SECTION}
+\begin{frame}{@SLIDE_TITLE}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}
+@PLOT1TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT1}
+\\
+\end{center}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+@PLOT2TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT2}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+"""
+
+
+four_plot_slide = \
+r"""
+\section{@SLIDE_SECTION}
+\begin{frame}{@SLIDE_TITLE}
+Some top text
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}
+@PLOT1TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT1}
+\\
+@PLOT3TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT3}
+\\
+\end{center}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+@PLOT2TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT2}
+\\
+@PLOT4TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT4}
+\\
+\end{center}
+\end{column}
+\end{columns}
+some bottom text
+\end{frame}
+"""
+
+six_plot_slide = \
+r"""
+\section{@SLIDE_SECTION}
+\begin{frame}{@SLIDE_TITLE}
+\begin{columns}
+\begin{column}{0.33\textwidth}
+\begin{center}
+@PLOT1TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT1}
+\\
+@PLOT4TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT4}
+\end{center}
+\end{column}
+
+\begin{column}{0.33\textwidth}
+\begin{center}
+@PLOT2TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT2}
+\\
+@PLOT5TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT5}
+\end{center}
+\end{column}
+
+\begin{column}{0.33\textwidth}
+\begin{center}
+@PLOT3TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT3}
+\\
+@PLOT6TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT6}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+"""
+
+
+def make_slide(slide_template, slide_section, slide_title, plots):
+    """
+    Create slide contents.
+
+    Parameters
+    ----------
+    slide_template : str
+        Slide template
+    slide_section : str
+        Slide section
+    slide_title : str
+        Slide title
+    plots : list[(str, str)]
+        Filename and optional title for each plot
+
+    Returns
+    -------
+    str
+        Slide contents
+    """
+
+    print "making slide"
+    slide = slide_template.replace("@SLIDE_TITLE", slide_title)
+    slide = slide.replace("@SLIDE_SECTION", slide_section)
+    for i, (plot_filename, plot_title) in enumerate(plots):
+            slide = slide.replace("@PLOT"+str(i+1)+"TITLE", plot_title)
+            slide = slide.replace("@PLOT"+str(i+1), plot_filename)
+
+    # cleanup incase we have leftover unused figures
+    slide = re.sub(r"@PLOT\dTITLE", "", slide)
+    slide = re.sub(r"\\includegraphics\[.*\]{@PLOT\d}", "", slide)  # to avoid "missing .tex file" error
+    slide = re.sub(r"\\\\\n\n", "", slide)  # remove useless line breaks
+    slide = slide.replace("\n\n\\\\", "\\\\")
+    return slide

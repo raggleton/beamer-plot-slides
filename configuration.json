@@ -1,0 +1,21 @@
+{
+	"frontpage": {
+		"title": "My awesome presentation",
+		"subtitle": "My awesome presentation",
+		"author": "My collaboration"
+	},
+
+	"slides": [
+		{
+			"section": "Baseline metrics",
+			"title": "Baseline metrics: Single muon",
+			"plots": [
+				["plot1.pdf", "Optional title"],
+				["plot2.pdf", "Plot 2 title"],
+				["plot3.pdf", "Plot 3 title"],
+				["plot4.pdf", "Plot 4 title"]
+			]
+		}
+
+	]
+}
