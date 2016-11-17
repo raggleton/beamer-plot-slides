@@ -54,7 +54,7 @@ r"""
 \begin{frame}{@SLIDE_TITLE}
 Some top text
 \begin{columns}
-\begin{column}{0.5\textwidth}
+\begin{column}{0.4\textwidth}
 \begin{center}
 @PLOT1TITLE
 \\
@@ -67,7 +67,7 @@ Some top text
 \end{center}
 \end{column}
 
-\begin{column}{0.5\textwidth}
+\begin{column}{0.4\textwidth}
 \begin{center}
 @PLOT2TITLE
 \\
