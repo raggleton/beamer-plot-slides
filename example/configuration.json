@@ -1,0 +1,44 @@
+{
+    "frontpage": {
+        "title": "My awesome presentation",
+        "subtitle": "My awesome subtitle",
+        "author": "My collaboration"
+    },
+
+    "slides": [
+        {
+            "title": "Baseline metrics: Single muon",
+            "toptext": "Some top text",
+            "plots": [
+                ["example/plot1.pdf", "Optional title"],
+                ["example/plot2.pdf", "Plot 2 title"],
+                ["example/plot3.pdf", "Plot 3 title"],
+                ["example/plot4.pdf", "Plot 4 title"]
+            ],
+            "bottomtext": "Some bottom text"
+        },
+        {
+            "title": "Baseline metrics: Single pion",
+            "toptext": "",
+            "plots": [
+                ["example/plot1.pdf", "Optional title"],
+                ["example/plot2.pdf", "Plot 2 title"],
+                ["example/plot3.pdf", "Plot 3 title"],
+                ["example/plot4.pdf", "Plot 4 title"]
+            ],
+            "bottomtext": ""
+        },
+        {
+            "title": "Baseline metrics: ttbar",
+            "toptext": "Some top text",
+            "plots": [
+                ["example/plot1.pdf", "Optional title"],
+                ["example/plot2.pdf", "Plot 2 title"],
+                ["example/plot3.pdf", "Plot 3 title"],
+                ["example/plot4.pdf", "Plot 4 title"]
+            ],
+            "bottomtext": "Some bottom text"
+        }
+
+    ]
+}

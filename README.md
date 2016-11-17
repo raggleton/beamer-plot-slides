@@ -8,7 +8,7 @@ Robin Aggleton
 
 ##Configure it
 
-Configuration is done via a JSON file, e.g. `configuration.json`.
+Configuration is done via a JSON file, e.g. `example/configuration.json`.
 There is info for the title slide, and then a dict for each slide.
 Each slide has various fields, including `plots`, which is a list of `[filename, title]` pairs.
 The title is optional.
