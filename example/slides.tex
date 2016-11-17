@@ -1,0 +1,49 @@
+\documentclass[10pt]{beamer}
+\usetheme{default}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+\setbeamertemplate{navigation symbols}{} % Turn off the navigation symbols
+\setbeamerfont{frametitle}{size=\fontsize{12pt}{8pt}}
+\setbeamertemplate{footline}[frame number]
+
+% \setbeamersize{text margin left=0mm, text margin right=0mm}
+
+
+% --- the presentation begins here ----------------%
+%\AtBeginSection[]
+%{
+%   \begin{frame}
+%   \frametitle{}
+%   \tableofcontents[currentsubsection, 
+%       hideothersubsections, 
+%       sectionstyle=show/shaded, 
+%       subsectionstyle=show/shaded, 
+%]
+%   \end{frame}
+%}
+
+\title{My awesome presentation}
+\subtitle{My awesome subtitle}
+\author[My collaboration]{My collaboration}
+\date{\today}
+
+
+\begin{document}
+
+%--- the titlepage frame -------------------------%
+%  use [fragile] to get verbatim text to work
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Table of Contents}
+    \begin{multicols}{2}
+        \tableofcontents
+    \end{multicols}
+\end{frame}
+
+%  Plot ALL the things
+\input{example/slides_input.tex}
+
+\end{document}
