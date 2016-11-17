@@ -14,6 +14,7 @@ import argparse
 import subprocess
 import beamer_slide_templates as bst
 import json
+from sys import platform as _platform
 
 
 def make_main_tex_file(frontpage_title='', subtitle='', author='',
@@ -127,12 +128,19 @@ def compile_pdf(tex_filename, outdir=None, num_compilations=1, latex_cmd='lualat
     for i in range(num_compilations):
         subprocess.call(args)
 
-    # Tidy up all the non .tex or .pdf files
-    # outdir = outdir or os.path.dirname(os.path.abspath(tex_filename))
-    # for f in glob.glob(os.path.join(outdir, tex_filename.replace(".tex", ".*"))):
-    #     if os.path.splitext(f)[1] not in [".tex", ".pdf"]:
-    #         print 'deleting', f
-    #         os.remove(f)
+
+def open_pdf(pdf_filename):
+    """Open a PDF file using system's default PDF viewer."""
+    if _platform.startswith("linux"):
+        # linux
+        subprocess.call(["xdg-open", pdf_filename])
+    elif _platform == "darwin":
+        # OS X
+        subprocess.call(["open", pdf_filename])
+    elif _platform == "win32":
+        # Windows
+        subprocess.call(["start", pdf_filename])
+
 
 
 if __name__ == "__main__":
