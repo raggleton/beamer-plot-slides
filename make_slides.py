@@ -126,11 +126,11 @@ def compile_pdf(tex_filename, outdir=None, num_compilations=1, latex_cmd='lualat
         subprocess.call(args)
 
     # Tidy up all the non .tex or .pdf files
-    outdir = outdir or os.path.dirname(os.path.abspath(tex_filename))
-    for f in glob.glob(os.path.join(outdir, tex_filename.replace(".tex", ".*"))):
-        if os.path.splitext(f)[1] not in [".tex", ".pdf"]:
-            print 'deleting', f
-            os.remove(f)
+    # outdir = outdir or os.path.dirname(os.path.abspath(tex_filename))
+    # for f in glob.glob(os.path.join(outdir, tex_filename.replace(".tex", ".*"))):
+    #     if os.path.splitext(f)[1] not in [".tex", ".pdf"]:
+    #         print 'deleting', f
+    #         os.remove(f)
 
 
 if __name__ == "__main__":
