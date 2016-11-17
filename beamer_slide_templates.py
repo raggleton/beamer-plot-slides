@@ -175,4 +175,5 @@ def make_slide(slide_template, slide_section, slide_title, plots, top_text=None,
     slide = re.sub(r"\\includegraphics\[.*\]{@PLOT\d}", "", slide)  # to avoid "missing .tex file" error
     slide = re.sub(r"\\\\\n\n", "", slide)  # remove useless line breaks
     slide = slide.replace("\n\n\\\\", "\\\\")
+    slide = re.sub(r"}\\\\\n", "}\n", slide)
     return slide
