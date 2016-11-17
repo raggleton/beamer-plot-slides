@@ -60,7 +60,7 @@ def make_slides(config_filename):
     with open(config_filename, "r") as fp:
         config_dict = json.load(fp)
 
-    out_stem = "slides"
+    out_stem = os.path.join(os.path.dirname(config_filename), "slides")
     main_file = out_stem + ".tex"
     slides_file = out_stem + "_input.tex"
     print "Writing to", main_file
@@ -154,7 +154,8 @@ if __name__ == "__main__":
     tex_file = make_slides(config_filename=args.config)
 
     if not args.noCompile:
-        compile_pdf(tex_file, num_compilations=2)  # compile twice to get page numbers correct
+        compile_pdf(tex_file, outdir=os.path.dirname(os.path.abspath(tex_file)),
+                    num_compilations=2)  # compile twice to get page numbers correct
 
     if args.open:
         open_pdf(tex_file.replace(".tex", ".pdf"))
