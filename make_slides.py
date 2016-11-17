@@ -87,7 +87,7 @@ def make_slides(config_filename, do_compile_pdf=True):
             slides.write(
                 bst.make_slide(
                     slide_template=template,
-                    slide_section=slide['section'],
+                    slide_section=slide['title'],
                     slide_title=slide['title'],
                     plots=slide['plots']
                 )
