@@ -43,15 +43,18 @@ def make_main_tex_file(frontpage_title='', subtitle='', author='',
                 f.write(line)
 
 
-def make_slides(config_filename, do_compile_pdf=True):
+def make_slides(config_filename):
     """Puts plots into one pdf.
 
     Parameters
     ----------
     config_filename : str
         Name of JSON config file
-    do_compile_pdf : bool, optional
-        Compile PDf
+
+    Returns
+    -------
+    str
+        Main TeX filename
     """
     print "Using configuration file", config_filename
     with open(config_filename, "r") as fp:
@@ -95,9 +98,7 @@ def make_slides(config_filename, do_compile_pdf=True):
                     bottom_text=slide['bottomtext']
                 )
             )
-
-    if do_compile_pdf:
-        compile_pdf(main_file, num_compilations=2)  # compile twice to get page numbers correct
+    return main_file
 
 
 def compile_pdf(tex_filename, outdir=None, num_compilations=1, latex_cmd='lualatex', nonstop=False):
@@ -147,6 +148,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("config", help="JSON configuration file")
     parser.add_argument("--noCompile", help="Don't compile PDF", action='store_true')
+    parser.add_argument("--open", help="Open PDF", action='store_true')
     args = parser.parse_args()
 
-    make_slides(config_filename=args.config, do_compile_pdf=not args.noCompile)
+    tex_file = make_slides(config_filename=args.config)
+
+    if not args.noCompile:
+        compile_pdf(tex_file, num_compilations=2)  # compile twice to get page numbers correct
+
+    if args.open:
+        open_pdf(tex_file.replace(".tex", ".pdf"))
