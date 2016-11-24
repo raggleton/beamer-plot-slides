@@ -106,3 +106,24 @@ Plot 6 title
 \end{columns}
 Some bottom text
 \end{frame}
+
+\section{No plots at all}
+\begin{frame}{No plots at all}
+We can put some very boring text in here. Even some maths: 
+ \begin{equation}
+ \alpha_{T} = x \times y 
+\end{equation}
+\begin{columns}
+\begin{column}{0.4\textwidth}
+\begin{center}
+\end{center}
+\end{column}
+
+\begin{column}{0.4\textwidth}
+\begin{center}
+\end{center}
+\end{column}
+\end{columns}
+We can even be sneaky and include another text file since JSON doesn't allow linebreaks (from \texttt{example/anotherFile.tex}): 
+ \input{anotherFile.tex}
+\end{frame}

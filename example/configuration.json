@@ -46,6 +46,11 @@
                 ["example/plot2.pdf", "Plot 6 title"]
             ],
             "bottomtext": "Some bottom text"
+        },
+        {
+            "title": "No plots at all",
+            "toptext": "We can put some very boring text in here. Even some maths: \n \\begin{equation}\n \\alpha_{T} = x \\times y \n\\end{equation}",
+            "bottomtext": "We can even be sneaky and include another text file since JSON doesn't allow linebreaks (from \\texttt{example/anotherFile.tex}): \n \\input{anotherFile.tex}"
         }
     ]
 }
