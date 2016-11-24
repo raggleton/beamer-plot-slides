@@ -68,7 +68,9 @@ def make_slides(config_filename):
     # Start beamer file - make main tex file
     # Use template - change title, subtitle, include file
     front_dict = config_dict['frontpage']
-    make_main_tex_file(front_dict['title'], front_dict['subtitle'], front_dict['author'],
+    make_main_tex_file(front_dict.get('title', ''),
+                       front_dict.get('subtitle', ''),
+                       front_dict.get('author', ''),
                        main_file, slides_file)
 
     # Now make the slides file to be included in main file
@@ -77,7 +79,7 @@ def make_slides(config_filename):
         for slide in slides_dict:
             print "Writing slide"
             template = None
-            num_plots = len(slide['plots'])
+            num_plots = len(slide.get('plots', ''))
             if num_plots == 1:
                 template = bst.one_plot_slide
             elif num_plots == 2:
@@ -91,11 +93,11 @@ def make_slides(config_filename):
             slides.write(
                 bst.make_slide(
                     slide_template=template,
-                    slide_section=slide['title'],
-                    slide_title=slide['title'],
-                    plots=slide['plots'],
-                    top_text=slide['toptext'],
-                    bottom_text=slide['bottomtext']
+                    slide_section=slide.get('title', ''),
+                    slide_title=slide.get('title', ''),
+                    plots=slide.get('plots', ''),
+                    top_text=slide.get('toptext', ''),
+                    bottom_text=slide.get('bottomtext', '')
                 )
             )
     return main_file
