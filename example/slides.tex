@@ -5,6 +5,9 @@
 \usetheme{default}
 \usepackage{graphicx}
 \usepackage{multicol}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{color}
 
 % Set your font here
 \usefonttheme{professionalfonts} % using non standard fonts for beamer
@@ -15,6 +18,12 @@
 \setbeamertemplate{navigation symbols}{} % Turn off the navigation symbols
 \setbeamerfont{frametitle}{size=\fontsize{12pt}{8pt}}
 \setbeamertemplate{footline}[frame number]
+
+% For logo in top-right of slides
+\usepackage{textpos}
+
+% Useful grid for locating things
+% \usepackage[texcoord,grid,gridunit=mm,gridcolor=red!10,subgridcolor=green!10]{eso-pic}
 
 % \setbeamersize{text margin left=0mm, text margin right=0mm}
 
@@ -51,6 +60,11 @@
         \tableofcontents
     \end{multicols}
 \end{frame}
+
+\addtobeamertemplate{frametitle}{}{%
+\begin{textblock*}{35mm}(0.88\textwidth,-0.2cm)
+\includegraphics[height=0.5cm]{uhh-logo-2}~\includegraphics[height=0.5cm,width=0.5cm]{CMS-Color.eps}
+\end{textblock*}}
 
 %  Plot ALL the things
 \input{example/slides_input.tex}
