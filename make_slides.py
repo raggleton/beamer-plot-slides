@@ -108,7 +108,9 @@ def make_slides(config_filename):
     return main_file
 
 
-def compile_pdf(tex_filename, outdir=None, num_compilations=1, latex_cmd='lualatex', nonstop=False):
+def compile_pdf(tex_filename, outdir=None,
+                latex_cmd='lualatex', num_compilations=1,
+                nonstop=False, cleanup=True):
     """Compile the pdf. Deletes all non-tex/pdf files afterwards.
 
     Parameters
@@ -117,12 +119,14 @@ def compile_pdf(tex_filename, outdir=None, num_compilations=1, latex_cmd='lualat
         Name of TeX file to compile
     outdir : str, optional
         Output directory for PDF file. Default is the same as that of the TeX file.
-    num_compilations : int, optional
-        Number of times to run tex command. Default is once.
     latex_cmd : str, optional
         Which latex command to run.
+    num_compilations : int, optional
+        Number of times to run tex command. Default is once.
     nonstop : bool, optional
         If True, just ignore compilation errors where possible
+    cleanup : bool, optional
+        If True, remove all the non text/pdf files that latex produced
     """
     args = ["nice", "-n", "19", latex_cmd]
     if nonstop:
@@ -135,6 +139,14 @@ def compile_pdf(tex_filename, outdir=None, num_compilations=1, latex_cmd='lualat
 
     for i in range(num_compilations):
         subprocess.call(args)
+
+    if cleanup:
+        for ext in ['.toc', '.snm', '.out', '.nav', '.log', '.aux']:
+            basename = os.path.splitext(tex_filename)[0]
+            this_file = basename + ext
+            if os.path.isfile(this_file):
+                print "rm", this_file
+                os.remove(this_file)
 
 
 def open_pdf(pdf_filename):
@@ -155,14 +167,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("config", help="JSON configuration file")
     parser.add_argument("--noCompile", help="Don't compile PDF", action='store_true')
+    parser.add_argument("--noCleanup", help="Don't remove auxiliary aux/toc/log etc", action='store_true')
     parser.add_argument("--open", help="Open PDF", action='store_true')
     args = parser.parse_args()
 
     tex_file = make_slides(config_filename=args.config)
 
     if not args.noCompile:
-        compile_pdf(tex_file, outdir=os.path.dirname(os.path.abspath(tex_file)),
-                    num_compilations=2)  # compile twice to get page numbers correct
+        compile_pdf(tex_file,
+                    outdir=os.path.dirname(os.path.abspath(tex_file)),
+                    num_compilations=2,  # compile twice to get page numbers correct
+                    cleanup=not args.noCleanup)
 
     if args.open:
         open_pdf(tex_file.replace(".tex", ".pdf"))
