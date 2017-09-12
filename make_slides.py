@@ -69,7 +69,7 @@ def make_slides(template_filename, config_filename):
     with open(config_filename, "r") as fp:
         config_dict = json.load(fp)
 
-    out_stem = os.path.join(os.path.dirname(config_filename), "slides")
+    out_stem = os.path.splitext(config_filename)[0] + "_slides"
     main_file = out_stem + ".tex"
     slides_file = out_stem + "_input.tex"
     print "Writing to", main_file
