@@ -7,13 +7,10 @@
 
     "slides": [
         {
-            "title": "A 4 plot slide",
+            "title": "Simple one plot slide",
             "toptext": "Some top text",
             "plots": [
-                ["example/plot1.pdf", "Optional title"],
-                ["example/plot2.pdf", "Plot 2 title"],
-                ["example/plot3.pdf", "Plot 3 title"],
-                ["example/plot4.pdf", "Plot 4 title"]
+                ["example/plot1.pdf", "Optional title"]
             ],
             "bottomtext": "Some bottom text"
         },
@@ -37,10 +34,13 @@
             "bottomtext": "blah blah blah"
         },
         {
-            "title": "Simple one plot slide",
+            "title": "A 4 plot slide",
             "toptext": "Some top text",
             "plots": [
-                ["example/plot1.pdf", "Optional title"]
+                ["example/plot1.pdf", "Optional title"],
+                ["example/plot2.pdf", "Plot 2 title"],
+                ["example/plot3.pdf", "Plot 3 title"],
+                ["example/plot4.pdf", "Plot 4 title"]
             ],
             "bottomtext": "Some bottom text"
         },
