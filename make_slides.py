@@ -22,12 +22,14 @@ import json
 from sys import platform as _platform
 
 
-def make_main_tex_file(frontpage_title='', subtitle='', author='',
+def make_main_tex_file(template_filename, frontpage_title='', subtitle='', author='',
                        main_tex_file='', slides_tex_file=''):
     """Generate main TeX file for set of slides, usign a template.
 
     Parameters
     ----------
+    template_filename : str
+        Name of beamer texmplate tex file
     frontpage_title : str, optional
         Title for title slide
     subtitle : str, optional
@@ -37,7 +39,7 @@ def make_main_tex_file(frontpage_title='', subtitle='', author='',
     slides_tex_file : str, optional
         Filename for slides file to be included.
     """
-    with open("beamer_template.tex", "r") as template:
+    with open(template_filename, "r") as template:
         with open(main_tex_file, "w") as f:
             substitute = {"@TITLE": frontpage_title, "@SUBTITLE": subtitle,
                           "@FILE": slides_tex_file, "@AUTHOR": author}
@@ -48,11 +50,13 @@ def make_main_tex_file(frontpage_title='', subtitle='', author='',
                 f.write(line)
 
 
-def make_slides(config_filename):
+def make_slides(template_filename, config_filename):
     """Puts plots into one pdf.
 
     Parameters
     ----------
+    template_filename : str
+        Name of beamer texmplate tex file
     config_filename : str
         Name of JSON config file
 
@@ -73,7 +77,9 @@ def make_slides(config_filename):
     # Start beamer file - make main tex file
     # Use template - change title, subtitle, include file
     front_dict = config_dict['frontpage']
-    make_main_tex_file(front_dict.get('title', ''),
+    print "Using template file", template_filename
+    make_main_tex_file(template_filename,
+                       front_dict.get('title', ''),
                        front_dict.get('subtitle', ''),
                        front_dict.get('author', ''),
                        main_file, slides_file)
@@ -168,12 +174,13 @@ def open_pdf(pdf_filename):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("config", help="JSON configuration file")
+    parser.add_argument("--template", help="Template beamer tex file", default="beamer_template.tex")
     parser.add_argument("--noCompile", help="Don't compile PDF", action='store_true')
     parser.add_argument("--noCleanup", help="Don't remove auxiliary aux/toc/log etc", action='store_true')
     parser.add_argument("--open", help="Open PDF", action='store_true')
     args = parser.parse_args()
 
-    tex_file = make_slides(config_filename=args.config)
+    tex_file = make_slides(template_filename=args.template, config_filename=args.config)
 
     if not args.noCompile:
         compile_pdf(tex_file,
