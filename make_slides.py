@@ -89,6 +89,8 @@ def make_slides(config_filename):
                 template = bst.one_plot_slide
             elif num_plots == 2:
                 template = bst.two_plot_slide
+            elif num_plots == 3:
+                template = bst.three_plot_slide
             elif num_plots <= 4:
                 template = bst.four_plot_slide
             elif num_plots <= 6:

@@ -27,6 +27,16 @@
             "bottomtext": "blah blah blah"
         },
         {
+            "title": "3 plot slide",
+            "toptext": "With no plot titles",
+            "plots": [
+                ["example/plot1.pdf", ""],
+                ["example/plot2.pdf", ""],
+                ["example/plot4.pdf", ""]
+            ],
+            "bottomtext": "blah blah blah"
+        },
+        {
             "title": "Simple one plot slide",
             "toptext": "Some top text",
             "plots": [

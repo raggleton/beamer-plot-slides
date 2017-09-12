@@ -51,6 +51,40 @@ r"""
 \end{frame}
 """
 
+three_plot_slide = \
+r"""
+\section{@SLIDE_SECTION}
+\begin{frame}{@SLIDE_TITLE}
+@TOPTEXT
+\begin{columns}
+\begin{column}{0.33\textwidth}
+\begin{center}
+@PLOT1TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT1}
+\\
+\end{center}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{center}
+@PLOT2TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT2}
+\\
+\end{center}
+\end{column}
+\begin{column}{0.33\textwidth}
+\begin{center}
+@PLOT3TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT3}
+\\
+\end{center}
+\end{column}
+\end{columns}
+@BOTTOMTEXT
+\end{frame}
+"""
 
 four_plot_slide = \
 r"""
