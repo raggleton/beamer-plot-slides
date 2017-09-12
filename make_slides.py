@@ -1,10 +1,15 @@
 #!/usr/bin/env python
-"""
-This script outputs all the calibration plots in the ROOT file output by
-runCalibration.py as one long pdf, cos TBrowser sucks.
 
-It will make the PDF in the same directory as the ROOT file, under a directory
-named output_<ROOT file stem>
+
+"""
+Produce a beamer PDF from various PDF images & text.
+See example/configuration.json for how to specify a configuration.
+Output file will be produced in same dir as the configuration JSON.
+
+Run:
+
+    ./make_slides.py <your_configuration.json>
+
 """
 
 
