@@ -49,6 +49,12 @@
 
 \begin{document}
 
+% Add a logo to top right of each body slide
+% \addtobeamertemplate{frametitle}{}{%
+% \begin{textblock*}{35mm}(0.88\textwidth,-0.2cm)
+% \includegraphics[height=0.5cm]{uhh-logo-2}~\includegraphics[height=0.5cm,width=0.5cm]{CMS-Color.eps}
+% \end{textblock*}}
+
 %--- the titlepage frame -------------------------%
 %  use [fragile] to get verbatim text to work
 \begin{frame}
@@ -60,11 +66,6 @@
         \tableofcontents
     \end{multicols}
 \end{frame}
-
-\addtobeamertemplate{frametitle}{}{%
-\begin{textblock*}{35mm}(0.88\textwidth,-0.2cm)
-\includegraphics[height=0.5cm]{uhh-logo-2}~\includegraphics[height=0.5cm,width=0.5cm]{CMS-Color.eps}
-\end{textblock*}}
 
 %  Plot ALL the things
 \input{@FILE}
