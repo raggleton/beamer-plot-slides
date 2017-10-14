@@ -7,7 +7,6 @@ Robin Aggleton 2015
 
 import re
 
-# Needs testing
 one_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
@@ -23,7 +22,6 @@ r"""
 \end{frame}
 """
 
-# Nees testing
 two_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
@@ -92,7 +90,7 @@ r"""
 \begin{frame}{@SLIDE_TITLE}
 @TOPTEXT
 \begin{columns}
-\begin{column}{0.4\textwidth}
+\begin{column}{0.3\textwidth}
 \begin{center}
 @PLOT1TITLE
 \\
@@ -105,7 +103,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.4\textwidth}
+\begin{column}{0.3\textwidth}
 \begin{center}
 @PLOT2TITLE
 \\
@@ -128,7 +126,7 @@ r"""
 \begin{frame}{@SLIDE_TITLE}
 @TOPTEXT
 \begin{columns}
-\begin{column}{0.33\textwidth}
+\begin{column}{0.3\textwidth}
 \begin{center}
 @PLOT1TITLE
 \\
@@ -140,7 +138,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.33\textwidth}
+\begin{column}{0.3\textwidth}
 \begin{center}
 @PLOT2TITLE
 \\
@@ -152,7 +150,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.33\textwidth}
+\begin{column}{0.3\textwidth}
 \begin{center}
 @PLOT3TITLE
 \\
