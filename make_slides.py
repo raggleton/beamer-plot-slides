@@ -21,6 +21,11 @@ import beamer_slide_templates as bst
 import json
 import sys
 from sys import platform as _platform
+import logging
+
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 
 def make_main_tex_file(template_filename, frontpage_title='', subtitle='', author='',
@@ -63,7 +68,7 @@ def make_slides_tex_file(slides_tex_file, slides_dict):
     """
     with open(slides_tex_file, "w") as slides:
         for slide in slides_dict:
-            print "Writing slide"
+            log.debug("Writing slide")
             template = None
             num_plots = len(slide.get('plots', ''))
             if num_plots == 1:
@@ -105,19 +110,19 @@ def make_slides(template_filename, config_filename):
     str
         Main TeX filename
     """
-    print "Using configuration file", config_filename
+    log.debug("Using configuration file %s", config_filename)
     with open(config_filename, "r") as fp:
         config_dict = json.load(fp)
 
     out_stem = os.path.splitext(config_filename)[0] + "_slides"
     main_file = out_stem + ".tex"
     slides_file = out_stem + "_input.tex"
-    print "Writing to", main_file
+    log.debug("Writing to %s", main_file)
 
     # Start beamer file - make main tex file
     # Use template - change title, subtitle, include file
     front_dict = config_dict['frontpage']
-    print "Using template file", template_filename
+    log.debug("Using template file %s", template_filename)
     make_main_tex_file(template_filename,
                        front_dict.get('title', ''),
                        front_dict.get('subtitle', ''),
@@ -131,7 +136,7 @@ def make_slides(template_filename, config_filename):
 
 def compile_pdf(tex_filename, outdir=None,
                 latex_cmd='lualatex', num_compilations=1,
-                nonstop=False, quiet=False, cleanup=True):
+                nonstop=False, verbose=False, cleanup=True):
     """Compile the pdf. Deletes all non-tex/pdf files afterwards.
 
     Parameters
@@ -154,13 +159,13 @@ def compile_pdf(tex_filename, outdir=None,
     args = ["nice", "-n", "19", latex_cmd]
     if nonstop:
         args.extend(["-interaction", "nonstopmode"])
-    if quiet:
+    if not verbose:
         args.extend(["--interaction", "batchmode"])
     if outdir is not None:
         args.append("-output-directory=%s" % outdir)
     args.append(tex_filename)
-    print 'Compiling PDF with'
-    print ' '.join(args)
+    log.debug('Compiling PDF with')
+    log.debug(' '.join(args))
 
     for i in range(num_compilations):
         subprocess.call(args)
@@ -170,7 +175,7 @@ def compile_pdf(tex_filename, outdir=None,
             basename = os.path.splitext(tex_filename)[0]
             this_file = basename + ext
             if os.path.isfile(this_file):
-                print "rm", this_file
+                log.debug("rm %", this_file)
                 os.remove(this_file)
 
 
@@ -194,10 +199,15 @@ def main(in_args):
     parser.add_argument("--template", help="Template beamer tex file", default="beamer_template.tex")
     parser.add_argument("--noCompile", help="Don't compile PDF", action='store_true')
     parser.add_argument("--noCleanup", help="Don't remove auxiliary aux/toc/log etc", action='store_true')
-    parser.add_argument("--quiet", help="Run in batch mode and remove most of spurioius printout", action='store_true')
+    parser.add_argument("-v", "--verbose", help="Verbose mode", action='store_true')
     parser.add_argument("--open", help="Open PDF", action='store_true')
     args = parser.parse_args(in_args)
-    
+
+    if args.verbose:
+        log.setLevel(logging.DEBUG)
+    else:
+        log.setLevel(logging.INFO)
+
     tex_file = make_slides(template_filename=args.template, config_filename=args.config)
 
     if not args.noCompile:
@@ -205,10 +215,13 @@ def main(in_args):
                     outdir=os.path.dirname(os.path.abspath(tex_file)),
                     num_compilations=2,  # compile twice to get page numbers correct
                     cleanup=not args.noCleanup, 
-                    quiet=args.quiet)
+                    verbose=args.verbose)
 
+    pdf_filename = tex_file.replace(".tex", ".pdf")
+    log.info("")
+    log.info("Created PDF %s", pdf_filename)
     if args.open:
-        open_pdf(tex_file.replace(".tex", ".pdf"))
+        open_pdf(pdf_filename)
 
 
 if __name__ == "__main__":

@@ -13,6 +13,11 @@ import os
 import argparse
 import make_slides as ms
 import json
+import logging
+
+
+log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 
 def create_json_contents(args):
@@ -45,9 +50,12 @@ if __name__ == '__main__':
     parser.add_argument("--template", help="Template beamer tex file", default="beamer_template.tex")
     parser.add_argument("--noCompile", help="Don't compile PDF", action='store_true')
     parser.add_argument("--noCleanup", help="Don't remove auxiliary aux/toc/log etc", action='store_true')
-    parser.add_argument("--quiet", help="Run in batch mode and remove most of spurioius printout", action='store_true')
+    parser.add_argument("-v", "--verbose", help="Run in verbose mode", action='store_true')
     parser.add_argument("--open", help="Open PDF", action='store_true')
     args = parser.parse_args()
+
+    if args.verbose:
+        log.setLevel(logging.DEBUG)
 
     # create a JSON config
     json_dict = create_json_contents(args)
@@ -59,7 +67,7 @@ if __name__ == '__main__':
     # This is horrible FIXME
     new_args = [temp_json]
     new_args.append('--template=' + args.template)
-    for name in ['noCompile', 'noCleanup', 'quiet', 'open']:
+    for name in ['noCompile', 'noCleanup', 'open']:
         if vars(args)[name]:
             new_args.append("--"+name)
 
