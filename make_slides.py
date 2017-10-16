@@ -19,6 +19,7 @@ import argparse
 import subprocess
 import beamer_slide_templates as bst
 import json
+import sys
 from sys import platform as _platform
 
 
@@ -186,8 +187,8 @@ def open_pdf(pdf_filename):
         subprocess.call(["start", pdf_filename])
 
 
-
-if __name__ == "__main__":
+def main(in_args):
+    """Run the whole shebang, making TeX files & compilation"""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("config", help="JSON configuration file")
     parser.add_argument("--template", help="Template beamer tex file", default="beamer_template.tex")
@@ -195,8 +196,8 @@ if __name__ == "__main__":
     parser.add_argument("--noCleanup", help="Don't remove auxiliary aux/toc/log etc", action='store_true')
     parser.add_argument("--quiet", help="Run in batch mode and remove most of spurioius printout", action='store_true')
     parser.add_argument("--open", help="Open PDF", action='store_true')
-    args = parser.parse_args()
-
+    args = parser.parse_args(in_args)
+    
     tex_file = make_slides(template_filename=args.template, config_filename=args.config)
 
     if not args.noCompile:
@@ -208,3 +209,7 @@ if __name__ == "__main__":
 
     if args.open:
         open_pdf(tex_file.replace(".tex", ".pdf"))
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
