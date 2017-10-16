@@ -19,7 +19,7 @@ def create_json_contents(args):
     """Create the JSON dict to be passed to make_slides.py"""
     json_dict = {
         'frontpage': {
-            "title": "Plot comparison",
+            "title": args.title.replace("_", "\_"),
             "subtitle": "",
             "author": ""
         },
@@ -41,6 +41,7 @@ if __name__ == '__main__':
     parser.add_argument("--dir", help="Directory to get plot from. Can be used multiple times", action="append")
     parser.add_argument("--dirlabel", help="Label to be given for dir. Must be used in conjunction with --dir, once per entry.", action="append")
     parser.add_argument("--plotname", help="Filename of plot. Can be used multiple times", action="append")
+    parser.add_argument("--title", help="Title of presentation", default="Plot comparison")
     parser.add_argument("--template", help="Template beamer tex file", default="beamer_template.tex")
     parser.add_argument("--noCompile", help="Don't compile PDF", action='store_true')
     parser.add_argument("--noCleanup", help="Don't remove auxiliary aux/toc/log etc", action='store_true')
