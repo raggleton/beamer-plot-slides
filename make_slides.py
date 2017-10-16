@@ -50,6 +50,45 @@ def make_main_tex_file(template_filename, frontpage_title='', subtitle='', autho
                 f.write(line)
 
 
+def make_slides_tex_file(slides_tex_file, slides_dict):
+    """Generate TeX file for slides contents
+
+    Parameters
+    ----------
+    slides_tex_file : str
+        Filename for slides TeX file to be written
+    slides_dict : dict
+        Dict of slides contents
+    """
+    with open(slides_tex_file, "w") as slides:
+        for slide in slides_dict:
+            print "Writing slide"
+            template = None
+            num_plots = len(slide.get('plots', ''))
+            if num_plots == 1:
+                template = bst.one_plot_slide
+            elif num_plots == 2:
+                template = bst.two_plot_slide
+            elif num_plots == 3:
+                template = bst.three_plot_slide
+            elif num_plots <= 4:
+                template = bst.four_plot_slide
+            elif num_plots <= 6:
+                template = bst.six_plot_slide
+            else:
+                raise RuntimeError("Cannot make a slide with %d plots" % num_plots)
+            slides.write(
+                bst.make_slide(
+                    slide_template=template,
+                    slide_section=slide.get('title', ''),
+                    slide_title=slide.get('title', ''),
+                    plots=slide.get('plots', ''),
+                    top_text=slide.get('toptext', ''),
+                    bottom_text=slide.get('bottomtext', '')
+                )
+            )
+
+
 def make_slides(template_filename, config_filename):
     """Puts plots into one pdf.
 
@@ -85,34 +124,7 @@ def make_slides(template_filename, config_filename):
                        main_file, slides_file)
 
     # Now make the slides file to be included in main file
-    with open(slides_file, "w") as slides:
-        slides_dict = config_dict['slides']
-        for slide in slides_dict:
-            print "Writing slide"
-            template = None
-            num_plots = len(slide.get('plots', ''))
-            if num_plots == 1:
-                template = bst.one_plot_slide
-            elif num_plots == 2:
-                template = bst.two_plot_slide
-            elif num_plots == 3:
-                template = bst.three_plot_slide
-            elif num_plots <= 4:
-                template = bst.four_plot_slide
-            elif num_plots <= 6:
-                template = bst.six_plot_slide
-            else:
-                raise RuntimeError("Cannot make a slide with %d plots" % num_plots)
-            slides.write(
-                bst.make_slide(
-                    slide_template=template,
-                    slide_section=slide.get('title', ''),
-                    slide_title=slide.get('title', ''),
-                    plots=slide.get('plots', ''),
-                    top_text=slide.get('toptext', ''),
-                    bottom_text=slide.get('bottomtext', '')
-                )
-            )
+    make_slides_tex_file(slides_tex_file=slides_file, slides_dict=config_dict['slides'])
     return main_file
 
 
