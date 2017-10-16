@@ -27,8 +27,8 @@ def create_json_contents(args):
     }
 
     for plot in args.plotname:
-        this_dict = {"title": plot}
-        plot_entries = [[os.path.join(this_dir, plot), ""] for this_dir in args.dir]
+        this_dict = {"title": plot.replace("_", "\_")}
+        plot_entries = [[os.path.join(this_dir, plot), this_label] for this_dir, this_label in zip(args.dir, args.dirlabel)]
         this_dict['plots'] = plot_entries
         json_dict['slides'].append(this_dict)
     
@@ -39,6 +39,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", help="Output PDF filename")
     parser.add_argument("--dir", help="Directory to get plot from. Can be used multiple times", action="append")
+    parser.add_argument("--dirlabel", help="Label to be given for dir. Must be used in conjunction with --dir, once per entry.", action="append")
     parser.add_argument("--plotname", help="Filename of plot. Can be used multiple times", action="append")
     parser.add_argument("--template", help="Template beamer tex file", default="beamer_template.tex")
     parser.add_argument("--noCompile", help="Don't compile PDF", action='store_true')
