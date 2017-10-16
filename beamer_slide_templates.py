@@ -191,7 +191,6 @@ def make_slide(slide_template, slide_section, slide_title, plots, top_text=None,
         Slide contents
     """
 
-    print "making slide"
     slide = slide_template.replace("@SLIDE_TITLE", slide_title)
     slide = slide.replace("@SLIDE_SECTION", slide_section)
     top_text = top_text or ""
