@@ -171,7 +171,7 @@ def compile_pdf(tex_filename, outdir=None,
         subprocess.call(args)
 
     if cleanup:
-        for ext in ['.toc', '.snm', '.out', '.nav', '.log', '.aux']:
+        for ext in ['.toc', '.snm', '.out', '.nav', '.log', '.aux', '.tex', "_input.tex"]:
             basename = os.path.splitext(tex_filename)[0]
             this_file = basename + ext
             if os.path.isfile(this_file):
