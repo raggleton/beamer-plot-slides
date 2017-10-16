@@ -130,7 +130,7 @@ def make_slides(template_filename, config_filename):
 
 def compile_pdf(tex_filename, outdir=None,
                 latex_cmd='lualatex', num_compilations=1,
-                nonstop=False, cleanup=True):
+                nonstop=False, quiet=False, cleanup=True):
     """Compile the pdf. Deletes all non-tex/pdf files afterwards.
 
     Parameters
@@ -145,12 +145,16 @@ def compile_pdf(tex_filename, outdir=None,
         Number of times to run tex command. Default is once.
     nonstop : bool, optional
         If True, just ignore compilation errors where possible
+    quiet : bool, optional
+        If True, run in batchmode and remove most of the prinout
     cleanup : bool, optional
         If True, remove all the non text/pdf files that latex produced
     """
     args = ["nice", "-n", "19", latex_cmd]
     if nonstop:
         args.extend(["-interaction", "nonstopmode"])
+    if quiet:
+        args.extend(["--interaction", "batchmode"])
     if outdir is not None:
         args.append("-output-directory=%s" % outdir)
     args.append(tex_filename)
@@ -189,6 +193,7 @@ if __name__ == "__main__":
     parser.add_argument("--template", help="Template beamer tex file", default="beamer_template.tex")
     parser.add_argument("--noCompile", help="Don't compile PDF", action='store_true')
     parser.add_argument("--noCleanup", help="Don't remove auxiliary aux/toc/log etc", action='store_true')
+    parser.add_argument("--quiet", help="Run in batch mode and remove most of spurioius printout", action='store_true')
     parser.add_argument("--open", help="Open PDF", action='store_true')
     args = parser.parse_args()
 
@@ -198,7 +203,8 @@ if __name__ == "__main__":
         compile_pdf(tex_file,
                     outdir=os.path.dirname(os.path.abspath(tex_file)),
                     num_compilations=2,  # compile twice to get page numbers correct
-                    cleanup=not args.noCleanup)
+                    cleanup=not args.noCleanup, 
+                    quiet=args.quiet)
 
     if args.open:
         open_pdf(tex_file.replace(".tex", ".pdf"))
