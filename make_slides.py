@@ -175,7 +175,7 @@ def compile_pdf(tex_filename, outdir=None,
             basename = os.path.splitext(tex_filename)[0]
             this_file = basename + ext
             if os.path.isfile(this_file):
-                log.debug("rm %", this_file)
+                log.debug("rm %s", this_file)
                 os.remove(this_file)
 
 
