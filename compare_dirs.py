@@ -105,9 +105,11 @@ if __name__ == '__main__':
     # This is horrible FIXME
     new_args = [temp_json]
     new_args.append('--template=' + args.template)
-    for name in ['noCompile', 'noCleanup', 'open']:
+    for name in ['noCompile', 'noCleanup', 'open', 'verbose']:
         if vars(args)[name]:
             new_args.append("--"+name)
+
+    log.debug(new_args)
 
     # run the main program as usual
     ms.main(new_args)
