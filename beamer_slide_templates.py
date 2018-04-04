@@ -7,6 +7,18 @@ Robin Aggleton 2015
 
 import re
 
+zero_plot_slide = \
+r"""
+\section{@SLIDE_SECTION}
+\begin{frame}{@SLIDE_TITLE}
+@TOPTEXT
+\begin{center}
+@PLOT1TITLE
+\end{center}
+@BOTTOMTEXT
+\end{frame}
+"""
+
 one_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
@@ -159,6 +171,64 @@ r"""
 @PLOT6TITLE
 \\
 \includegraphics[width=\textwidth]{@PLOT6}
+\end{center}
+\end{column}
+\end{columns}
+@BOTTOMTEXT
+\end{frame}
+"""
+
+eight_plot_slide = \
+r"""
+\section{@SLIDE_SECTION}
+\begin{frame}{@SLIDE_TITLE}
+@TOPTEXT
+\begin{columns}
+\begin{column}{0.24\textwidth}
+\begin{center}
+@PLOT1TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT1}
+\\
+@PLOT5TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT5}
+\end{center}
+\end{column}
+
+\begin{column}{0.24\textwidth}
+\begin{center}
+@PLOT2TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT2}
+\\
+@PLOT6TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT6}
+\end{center}
+\end{column}
+
+\begin{column}{0.24\textwidth}
+\begin{center}
+@PLOT3TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT3}
+\\
+@PLOT7TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT7}
+\end{center}
+\end{column}
+
+\begin{column}{0.24\textwidth}
+\begin{center}
+@PLOT4TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT4}
+\\
+@PLOT8TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT8}
 \end{center}
 \end{column}
 \end{columns}

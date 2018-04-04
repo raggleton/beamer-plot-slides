@@ -71,7 +71,9 @@ def make_slides_tex_file(slides_tex_file, slides_dict):
             log.debug("Writing slide")
             template = None
             num_plots = len(slide.get('plots', ''))
-            if num_plots == 1:
+            if num_plots == 0:
+                template = bst.zero_plot_slide
+            elif num_plots == 1:
                 template = bst.one_plot_slide
             elif num_plots == 2:
                 template = bst.two_plot_slide
@@ -81,6 +83,8 @@ def make_slides_tex_file(slides_tex_file, slides_dict):
                 template = bst.four_plot_slide
             elif num_plots <= 6:
                 template = bst.six_plot_slide
+            elif num_plots <= 8:
+                template = bst.eight_plot_slide
             else:
                 raise RuntimeError("Cannot make a slide with %d plots" % num_plots)
             slides.write(
