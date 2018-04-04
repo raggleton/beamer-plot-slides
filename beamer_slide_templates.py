@@ -19,6 +19,7 @@ r"""
 \end{frame}
 """
 
+one_plot_width = 0.7
 one_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
@@ -27,20 +28,21 @@ r"""
 \begin{center}
 @PLOT1TITLE
 \\
-\includegraphics[width=0.7\textwidth]{@PLOT1}
+\includegraphics[width=%g\textwidth]{@PLOT1}
 \\
 \end{center}
 @BOTTOMTEXT
 \end{frame}
-"""
+""" % (one_plot_width)
 
+two_plot_width = 0.5
 two_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
 \begin{frame}{@SLIDE_TITLE}
 @TOPTEXT
 \begin{columns}
-\begin{column}{0.5\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT1TITLE
 \\
@@ -49,7 +51,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.5\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT2TITLE
 \\
@@ -59,15 +61,16 @@ r"""
 \end{columns}
 @BOTTOMTEXT
 \end{frame}
-"""
+""" % tuple([two_plot_width]*2)
 
+three_plot_width = 0.33
 three_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
 \begin{frame}{@SLIDE_TITLE}
 @TOPTEXT
 \begin{columns}
-\begin{column}{0.33\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT1TITLE
 \\
@@ -75,7 +78,7 @@ r"""
 \\
 \end{center}
 \end{column}
-\begin{column}{0.33\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT2TITLE
 \\
@@ -83,7 +86,7 @@ r"""
 \\
 \end{center}
 \end{column}
-\begin{column}{0.33\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT3TITLE
 \\
@@ -94,15 +97,16 @@ r"""
 \end{columns}
 @BOTTOMTEXT
 \end{frame}
-"""
+""" % tuple([three_plot_width]*3)
 
+four_plot_width = 0.3
 four_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
 \begin{frame}{@SLIDE_TITLE}
 @TOPTEXT
 \begin{columns}
-\begin{column}{0.3\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT1TITLE
 \\
@@ -115,7 +119,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.3\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT2TITLE
 \\
@@ -130,15 +134,16 @@ r"""
 \end{columns}
 @BOTTOMTEXT
 \end{frame}
-"""
+""" % tuple([four_plot_width]*2)
 
+six_plot_width = 0.26
 six_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
 \begin{frame}{@SLIDE_TITLE}
 @TOPTEXT
 \begin{columns}
-\begin{column}{0.3\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT1TITLE
 \\
@@ -150,7 +155,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.3\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT2TITLE
 \\
@@ -162,7 +167,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.3\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT3TITLE
 \\
@@ -176,15 +181,16 @@ r"""
 \end{columns}
 @BOTTOMTEXT
 \end{frame}
-"""
+""" % tuple([six_plot_width]*3)
 
+eight_plot_width = 0.24
 eight_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
 \begin{frame}{@SLIDE_TITLE}
 @TOPTEXT
 \begin{columns}
-\begin{column}{0.24\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT1TITLE
 \\
@@ -196,7 +202,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.24\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT2TITLE
 \\
@@ -208,7 +214,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.24\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT3TITLE
 \\
@@ -220,7 +226,7 @@ r"""
 \end{center}
 \end{column}
 
-\begin{column}{0.24\textwidth}
+\begin{column}{%g\textwidth}
 \begin{center}
 @PLOT4TITLE
 \\
@@ -234,7 +240,7 @@ r"""
 \end{columns}
 @BOTTOMTEXT
 \end{frame}
-"""
+""" % tuple([eight_plot_width]*4)
 
 
 def make_slide(slide_template, slide_section, slide_title, plots, top_text=None, bottom_text=None):
