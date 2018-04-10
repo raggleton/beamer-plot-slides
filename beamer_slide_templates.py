@@ -346,9 +346,11 @@ def make_slide(slide_template, slide_section, slide_title, plots, top_text=None,
     slide = slide.replace("@TOPTEXT", top_text)
     bottom_text = bottom_text or ""
     slide = slide.replace("@BOTTOMTEXT", bottom_text)
-    for i, (plot_filename, plot_title) in enumerate(plots):
-            slide = slide.replace("@PLOT"+str(i+1)+"TITLE", plot_title)
-            slide = slide.replace("@PLOT"+str(i+1), plot_filename)
+    # Go backwards since we want to replace "PLOT10" before "PLOT1"
+    for i in range(len(plots), 0, -1):
+        plot_filename, plot_title = plots[i-1]
+        slide = slide.replace("@PLOT"+str(i)+"TITLE", plot_title)
+        slide = slide.replace("@PLOT"+str(i), plot_filename)
 
     # cleanup incase we have leftover unused figures
     slide = re.sub(r"@PLOT\dTITLE", "", slide)
