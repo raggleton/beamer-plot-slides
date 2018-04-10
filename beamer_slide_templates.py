@@ -242,6 +242,79 @@ r"""
 \end{frame}
 """ % tuple([eight_plot_width]*4)
 
+ten_plot_width = 0.18
+ten_plot_slide = \
+r"""
+\section{@SLIDE_SECTION}
+\begin{frame}{@SLIDE_TITLE}
+@TOPTEXT
+\begin{columns}
+
+\begin{column}{%g\textwidth}
+\begin{center}
+@PLOT1TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT1}
+\\
+@PLOT6TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT6}
+\end{center}
+\end{column}
+
+\begin{column}{%g\textwidth}
+\begin{center}
+@PLOT2TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT2}
+\\
+@PLOT7TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT7}
+\end{center}
+\end{column}
+
+\begin{column}{%g\textwidth}
+\begin{center}
+@PLOT3TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT3}
+\\
+@PLOT8TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT8}
+\end{center}
+\end{column}
+
+\begin{column}{%g\textwidth}
+\begin{center}
+@PLOT4TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT4}
+\\
+@PLOT9TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT9}
+\end{center}
+\end{column}
+
+\begin{column}{%g\textwidth}
+\begin{center}
+@PLOT5TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT5}
+\\
+@PLOT10TITLE
+\\
+\includegraphics[width=\textwidth]{@PLOT10}
+\end{center}
+\end{column}
+
+\end{columns}
+@BOTTOMTEXT
+\end{frame}
+""" % tuple([ten_plot_width]*5)
+
 
 def make_slide(slide_template, slide_section, slide_title, plots, top_text=None, bottom_text=None):
     """
