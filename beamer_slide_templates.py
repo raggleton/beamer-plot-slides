@@ -19,7 +19,7 @@ r"""
 \end{frame}
 """
 
-one_plot_width = 0.7
+one_plot_width = 0.5
 one_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
@@ -136,7 +136,7 @@ r"""
 \end{frame}
 """ % tuple([four_plot_width]*2)
 
-six_plot_width = 0.26
+six_plot_width = 0.22
 six_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
@@ -183,7 +183,7 @@ r"""
 \end{frame}
 """ % tuple([six_plot_width]*3)
 
-eight_plot_width = 0.24
+eight_plot_width = 0.22
 eight_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
