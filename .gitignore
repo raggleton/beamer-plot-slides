@@ -6,3 +6,9 @@
 *.snm
 *.toc
 *.pyc
+*.json
+*.tex
+*.root
+!example/*.json
+!example/*.tex
+!example/*.pdf
