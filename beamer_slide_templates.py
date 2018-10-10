@@ -147,7 +147,7 @@ r"""
 \end{frame}
 """ % tuple([four_plot_width]*2)
 
-six_plot_width = 0.22
+six_plot_width = 0.24
 six_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
