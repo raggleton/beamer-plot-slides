@@ -77,7 +77,10 @@ def make_slides_tex_file(slides_tex_file, slides_dict):
             template = None
             num_plots = len(slide.get('plots', ''))
             if num_plots == 0:
-                template = bst.zero_plot_slide
+                if slide.get('toptext', "") == "" and slide.get('bottomtext', "") == "":
+                    template = bst.only_title_slide
+                else:
+                    template = bst.zero_plot_slide
             elif num_plots == 1:
                 template = bst.one_plot_slide
             elif num_plots == 2:

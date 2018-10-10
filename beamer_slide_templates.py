@@ -7,6 +7,17 @@ Robin Aggleton 2015
 
 import re
 
+only_title_slide = \
+r"""
+\begin{frame}
+\vfill
+\centering
+\huge @SLIDE_TITLE
+\vfill
+\end{frame}
+"""
+
+
 zero_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
