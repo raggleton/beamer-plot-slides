@@ -29,8 +29,8 @@ logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 
 def make_main_tex_file(template_filename, frontpage_title='', subtitle='', author='',
-                       main_tex_file='', slides_tex_file=''):
-    """Generate main TeX file for set of slides, usign a template.
+                       main_tex_file='', slides_tex_file='', toc_tex=''):
+    """Generate main TeX file for set of slides, using a template.
 
     Parameters
     ----------
@@ -40,15 +40,20 @@ def make_main_tex_file(template_filename, frontpage_title='', subtitle='', autho
         Title for title slide
     subtitle : str, optional
         Subtitle for title slide
+    author : str, optional
+        Author nae for front slide
     main_tex_file : str, optional
         Filename for main TeX file to be written.
     slides_tex_file : str, optional
         Filename for slides file to be included.
+    toc_tex : str, optional
+        Table of Contents tex snippet
     """
     with open(template_filename, "r") as template:
         with open(main_tex_file, "w") as f:
             substitute = {"@TITLE": frontpage_title, "@SUBTITLE": subtitle,
-                          "@FILE": slides_tex_file, "@AUTHOR": author}
+                          "@FILE": slides_tex_file, "@AUTHOR": author,
+                          "@TOC": toc_tex}
             for line in template:
                 for k in substitute:
                     if k in line:
@@ -101,8 +106,34 @@ def make_slides_tex_file(slides_tex_file, slides_dict):
             )
 
 
-def make_slides(template_filename, config_filename):
-    """Puts plots into one pdf.
+def get_toc_text(do_toc):
+    """Gets text insert for table of contents
+
+    Parameters
+    ----------
+    do_toc : bool
+        Whether to do actual TOC or dummy
+
+    Returns
+    -------
+    str
+
+    """
+    if do_toc:
+        return r"""
+\begin{frame}{Table of Contents}
+    \begin{multicols}{2}
+        % \verysmall
+        \tableofcontents
+    \end{multicols}
+\end{frame}
+"""
+    else:
+        return ""
+
+
+def make_tex_files(template_filename, config_filename, do_toc):
+    """Make the relevant TeX files: main one,  and separate one with all plots
 
     Parameters
     ----------
@@ -110,6 +141,8 @@ def make_slides(template_filename, config_filename):
         Name of beamer texmplate tex file
     config_filename : str
         Name of JSON config file
+    do_toc : bool
+        Add table of contents
 
     Returns
     -------
@@ -133,7 +166,9 @@ def make_slides(template_filename, config_filename):
                        front_dict.get('title', ''),
                        front_dict.get('subtitle', ''),
                        front_dict.get('author', ''),
-                       main_file, slides_file)
+                       main_file,
+                       slides_file,
+                       get_toc_text(do_toc))
 
     # Now make the slides file to be included in main file
     make_slides_tex_file(slides_tex_file=slides_file, slides_dict=config_dict['slides'])
@@ -207,6 +242,7 @@ def main(in_args):
     parser.add_argument("--noCleanup", help="Don't remove auxiliary aux/toc/log etc", action='store_true')
     parser.add_argument("-v", "--verbose", help="Verbose mode", action='store_true')
     parser.add_argument("--open", help="Open PDF", action='store_true')
+    parser.add_argument("--notoc", help="No table of contents", action='store_true')
     args = parser.parse_args(in_args)
 
     if args.verbose:
@@ -214,13 +250,15 @@ def main(in_args):
     else:
         log.setLevel(logging.INFO)
 
-    tex_file = make_slides(template_filename=args.template, config_filename=args.config)
+    tex_file = make_tex_files(template_filename=args.template,
+                              config_filename=args.config,
+                              do_toc=not args.notoc)
 
     if not args.noCompile:
         compile_pdf(tex_file,
                     outdir=os.path.dirname(os.path.abspath(tex_file)),
                     num_compilations=2,  # compile twice to get page numbers correct
-                    cleanup=not args.noCleanup, 
+                    cleanup=not args.noCleanup,
                     verbose=args.verbose)
 
     pdf_filename = tex_file.replace(".tex", ".pdf")
