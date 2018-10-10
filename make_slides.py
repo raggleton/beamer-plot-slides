@@ -109,28 +109,45 @@ def make_slides_tex_file(slides_tex_file, slides_dict):
             )
 
 
-def get_toc_text(do_toc):
+def get_toc_tex(do_toc, n_slides=2):
     """Gets text insert for table of contents
-
+    
     Parameters
     ----------
     do_toc : bool
         Whether to do actual TOC or dummy
-
+    n_cols : int
+        Number of slides to be in table of contents
+        Determines number of columns
     Returns
     -------
     str
-
+        Tex snippet to use
     """
     if do_toc:
-        return r"""
+        
+        tex = r"""
 \begin{frame}{Table of Contents}
-    \begin{multicols}{2}
-        % \verysmall
-        \tableofcontents
-    \end{multicols}
+@STARTMULTICOL
+    \tableofcontents
+@ENDMULTICOL
 \end{frame}
 """
+        n_cols = 1
+        if n_slides > 20:
+            n_cols = 3
+        elif n_slides > 10:
+            n_cols = 2
+
+        # Have to do it this way, multicols seems to ignore arg = 1 ?!
+        if n_cols > 1:
+            tex = tex.replace("@STARTMULTICOL", r"""    \begin{multicols}{"""+str(n_cols)+r"""}""")
+            tex = tex.replace("@ENDMULTICOL", r"    \end{multicols}")
+        else:
+            tex = tex.replace("@STARTMULTICOL", "")
+            tex = tex.replace("@ENDMULTICOL", "")
+    
+        return tex
     else:
         return ""
 
@@ -171,7 +188,7 @@ def make_tex_files(template_filename, config_filename, do_toc):
                        front_dict.get('author', ''),
                        main_file,
                        slides_file,
-                       get_toc_text(do_toc))
+                       get_toc_tex(do_toc, n_slides=len(config_dict['slides'])))
 
     # Now make the slides file to be included in main file
     make_slides_tex_file(slides_tex_file=slides_file, slides_dict=config_dict['slides'])
