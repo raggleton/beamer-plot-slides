@@ -35,7 +35,7 @@ r"""
 \end{frame}
 """ % (one_plot_width)
 
-two_plot_width = 0.5
+two_plot_width = 0.45
 two_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
@@ -99,7 +99,7 @@ r"""
 \end{frame}
 """ % tuple([three_plot_width]*3)
 
-four_plot_width = 0.3
+four_plot_width = 0.23
 four_plot_slide = \
 r"""
 \section{@SLIDE_SECTION}
